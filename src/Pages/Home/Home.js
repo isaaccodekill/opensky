@@ -100,9 +100,10 @@ const Home = () => {
 	        onClose={close}
       		>
 		        <div className={styles.ModalMain}>
-					<div className="imageHolder">
-						<img src="" alt=""/>
+					<div className={styles.imageHolder}>
+						<img src={modalDetails.image} alt=""/>
 						<h2>{modalDetails.name}</h2>
+						<span className={styles.location}>{modalDetails.location}</span>
 						<div className={styles.mainContainer}>
 						</div>
 					</div>
