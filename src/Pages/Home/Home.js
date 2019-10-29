@@ -87,7 +87,7 @@ const Home = () => {
 	}
 	const close = () => setModalOpen(false)		
 
-	const cardList = cities.map(city => <Card {...city} clickfunc={() => open(city.id)} />)
+	const cardList = cities.map(city => <Card {...city} clickFunc={() => open(city.id)} />)
 	return (
 		<div className={styles.Homepage}>
 			<NavBar/>
