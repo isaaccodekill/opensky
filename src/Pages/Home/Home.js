@@ -80,8 +80,8 @@ const Home = () => {
 		location: ""
 	})
 
-	const open = (id) => {
-		const extractedArr = cities.filter(({ id }) => id == id )
+	const open = (idnumber) => {
+		const extractedArr = cities.filter(({ id }) => id == idnumber )
 		setModalDetails(extractedArr[0]) 
 		setModalOpen(true)
 	}
@@ -103,10 +103,10 @@ const Home = () => {
 					<div className={styles.imageHolder}>
 						<img src={modalDetails.image} alt=""/>
 						<h2>{modalDetails.name}</h2>
-						<span className={styles.location}>{modalDetails.location}</span>
+						<span className={styles.location}>{modalDetails.Location}</span>
+					</div>
 						<div className={styles.mainContainer}>
 						</div>
-					</div>
 
 		        </div>
       	</Modal>
