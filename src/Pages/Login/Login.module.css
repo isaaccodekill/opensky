@@ -1,0 +1,49 @@
+.Login{
+	height: 100%;
+	padding-top: 70px;
+}
+
+.LoginBox{
+	position: absolute;
+	top: calc(50%);
+	left: 50%;
+	width: 100%;
+	width: 450px;
+	border: 1px solid #dadce0;
+	border-radius: 8px;
+	padding: 40px;
+	transform: translate(-50%, -50%);
+}
+
+.formHeader{
+	color: #202124;
+	font-size: 24px;
+	font-weight: 400px;
+	margin-bottom: 20px;
+}
+
+.formGroup{
+	display: block;
+	width: 100%;
+	margin: 15px 0;
+}
+
+.button{
+	float: right;
+	margin-top: 20px;
+}
+
+.input{
+	width: 100%;
+}
+
+
+
+
+
+@media (max-width: 600px) {
+	.LoginBox{
+		width: 100%;
+		top: 140px;
+	}
+}

@@ -1,0 +1,14 @@
+.Homepage{
+	height: 100%;
+	padding-top: 70px;	
+}
+
+.gridContainer{
+	display: grid;	
+	grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+	grid-gap: 35px;
+	padding: 100px;
+	margin: 0 auto;
+	/*width: 	100%;*/
+	justify-content: center;	
+}
