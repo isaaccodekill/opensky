@@ -1,0 +1,23 @@
+.Result{
+	background-color: #eee;
+	padding: 15px;
+	border-radius: 8px;
+	box-shadow: 0 2px 4px #00000020;
+	width: 100%;
+	margin: 15px 0;
+}
+
+.informationGroup{
+	width: 100%;
+	margin: 5px 0;
+}
+
+.informationGroup span{
+	font-size: 15px;
+	color: #000;
+}
+
+.Lead{
+	font-weight: 500;
+	margin-right: 10px;
+}

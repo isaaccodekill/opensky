@@ -65,7 +65,7 @@ const Login = () => {
       					/>
 					</div>
 					 <Button type="submit" variant="contained" color="primary" size="large" className={styles.button}>
-      					  Primary
+      					  Login
       				</Button>
 
 				</form>

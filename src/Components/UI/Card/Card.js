@@ -15,14 +15,28 @@ const CardComponent = ({ id, name, image, Location, clickFunc }) => {
 	return (
 	 <Card className={styles.card} onClick={clickFunc}>
 	  {/*className={classes.card}*/}
-      <CardActionArea>
+      <CardActionArea style={{
+        height: "290px"
+      }}>
         <CardMedia
           component="img"
           height="180"
           image={image}
+          style={{
+              position: "absolute",
+              top: 0
+          }}
         />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
+        <CardContent
+            style={{
+              position: "absolute",
+              top: "180px"
+            }}
+
+        >
+          <Typography gutterBottom variant="h5" component="h2" style={{
+            fontSize: '18px'
+          }}>
             {name}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
