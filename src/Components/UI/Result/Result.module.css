@@ -1,5 +1,5 @@
 .Result{
-	background-color: #eee;
+	background-color: #cccccc70;
 	padding: 15px;
 	border-radius: 8px;
 	box-shadow: 0 2px 4px #00000020;
@@ -20,4 +20,8 @@
 .Lead{
 	font-weight: 500;
 	margin-right: 10px;
+}
+
+.result{
+	font-size: 12px;
 }

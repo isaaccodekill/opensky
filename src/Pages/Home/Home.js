@@ -13,7 +13,9 @@ import Button from '@material-ui/core/Button';
 
 const Home = () => {
 	const [modalOpen, setModalOpen] = useState(false)
-	const [mins, setMins] = useState(0)
+	const [mins, setMins] = useState()
+	const [showLoader, setShowLoader] = useState(false)
+	const [recieved, setRecieved] = useState(false)
 	const [modalDetails, setModalDetails] = useState({
 		name: "",
 		image:"",
@@ -21,18 +23,16 @@ const Home = () => {
 		code: ""
 	})
 	const [mode, setMode] = useState('arrival')
+	const [results, setResult] = useState([])
 
 	const CURRENT_TIME_IN_SECS = Math.round(new Date().getTime()) / 1000
-	let results = []
-	let showLoader = true
 	let content = null
-	let setTimesec = ""
+	let setTimesec = 0
 
 	const Timesetter = (mins) => {
 		// get the current time
-		const currentTimeSecs = Math.round(new Date().getTime()) / 1000
 		const minsInSecs = mins * 60
-		setTimesec = currentTimeSecs - minsInSecs
+		setTimesec = CURRENT_TIME_IN_SECS - minsInSecs
 	}
 
 
@@ -110,19 +110,40 @@ const Home = () => {
 	]
 
 	const getFlightdetails = () => {
-		showLoader = false
-		let url = `https://USERNAME:PASSWORD@opensky-network.org/api/flights/${mode}?airport=${modalDetails.airportCode}&begin=${setTimesec}&end=${CURRENT_TIME_IN_SECS}`
+		setShowLoader(true)
+		console.log(CURRENT_TIME_IN_SECS)
+		console.log(setTimesec)
+		let url = `https://opensky-network.org/api/flights/${mode}?airport=${modalDetails.code}&begin=${parseInt(setTimesec)}&end=${parseInt(CURRENT_TIME_IN_SECS)}`
+		console.log(url)
 		fetch(url)
 		.then(res => res.json())
-		.then(data => console.log(data))
+		.then(data => {
+			setShowLoader(false)
+			setRecieved(true)
+			if (data.length > 20){
+				setResult([...data.slice(0, 21)])
+			}else{
+				setResult([...data])
+			}
+			console.log(data)
+		})
 		.catch(error => console.log(error))
 	}
 
 	if (showLoader){
 		content = (<div className={styles.LoaderContainer}><Loader/></div>)
 	}else{
-		content = results.map(result => <Result/>)
-	}
+		if (recieved && results.length == 0){
+			content = (<h5 className={styles.warning}>No results rerurned, try a larger time interval</h5>)
+		}else{
+			content = results.map(({icao24, callsign, estDepartureAirport, estArrivalAirport }) => <Result 
+			icao24={icao24}
+			callsign={callsign}
+			estDepartureAirport={estDepartureAirport}
+			estArrivalAirport={estArrivalAirport}
+			 />)
+			}
+		}
 
 
 	const open = (idnumber) => {
@@ -153,17 +174,27 @@ const Home = () => {
 						<div className={styles.mainContainer}>
 							<div className={styles.mainContainerHeader}>
 								<div className={(mode == "arrival") ? [styles.HeaderBox, styles.active].join(' ') : styles.HeaderBox} onClick={() => {
+									setMins(0)
+									setResult([])
 									setMode('arrival')}}>Arrivals</div>
-								<div className={(mode == "departure") ? [styles.HeaderBox, styles.active].join(' ') :  styles.HeaderBox} onClick={() => setMode('departure')}>Departures</div>
+								<div className={(mode == "departure") ? [styles.HeaderBox, styles.active].join(' ') :  styles.HeaderBox} onClick={() => {
+									setMins(0)
+									setResult([])
+									setMode('departure')}}>Departures</div>
 							</div>
 							<div className={styles.actionBar}>
 								<div className="inputbox">
-								<input type="number" onChange={(e) => {
+								<input type="number" value={mins} min='10'max='10080' onChange={(e) => {
 									setMins(e.target.value)
-									Timesetter(mins)
-									getFlightdetails(mode)
+									setRecieved(false)
 								}} className={styles.input}/> <span>mins ago</span> 
 								</div>
+								<Button onClick={() => {
+									Timesetter(mins)
+									getFlightdetails(mode)
+								}} variant="contained" color="primary" size="medium" className={styles.button}>
+      					  			Search
+      							</Button>
 							</div>
 							<div className={styles.mainContent}>
 								{(mins > 0) ? content : <h1 className={styles.warning}>input number of minutes</h1> }				

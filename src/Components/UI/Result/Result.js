@@ -1,12 +1,22 @@
 import React from 'react'
 import styles from './Result.module.css'
 
-const Result = ({config}) => {
+const Result = ({icao24, callsign, estDepartureAirport, estArrivalAirport}) => {
+	console.log(icao24)
+	console.log(callsign)
 	return (
 		<div className={styles.Result}>
 			<div className={styles.informationGroup}>
-				<span className={styles.Lead}>Airline:</span>
-				<span className={styles.result}>result</span>
+				<span className={styles.Lead}>icao24:</span> <span className={styles.result}>{icao24}</span>
+			</div>
+			<div className={styles.informationGroup}>
+				<span className={styles.Lead}>callsign:</span> <span className={styles.result}>{callsign}</span>
+			</div>
+			<div className={styles.informationGroup}>
+				<span className={styles.Lead}>Departure-Airport:</span> <span className={styles.result}>{estDepartureAirport}</span>
+			</div>
+			<div className={styles.informationGroup}>
+				<span className={styles.Lead}>Arrival-Airport:</span> <span className={styles.result}>{estArrivalAirport}</span>
 			</div>
 		</div>
 	)
