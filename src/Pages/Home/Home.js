@@ -111,8 +111,6 @@ const Home = () => {
 
 	const getFlightdetails = () => {
 		setShowLoader(true)
-		console.log(CURRENT_TIME_IN_SECS)
-		console.log(setTimesec)
 		let url = `https://opensky-network.org/api/flights/${mode}?airport=${modalDetails.code}&begin=${parseInt(setTimesec)}&end=${parseInt(CURRENT_TIME_IN_SECS)}`
 		console.log(url)
 		fetch(url)
