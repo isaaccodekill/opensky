@@ -36,7 +36,7 @@ const Login = () => {
 					e.preventDefault()
 					if(loginDetails.username == "demo"  && loginDetails.password == "demo" ){
 						setAuth(true)
-						// return <Redirect to="/" />
+						return <Redirect to="/" />
 					}
 				}}>
 					<h1 className={styles.formHeader}>Log in</h1>
