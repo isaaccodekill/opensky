@@ -1,12 +1,11 @@
 import React, { useState, useContext } from 'react'
 import styles from './Login.module.css'
 import NavBar from '../../Components/UI/NavBar/NavBar'
-import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button';
 import { AuthContext } from '../../Contexts/AuthContext'
 import { Redirect } from 'react-router'
-import Modal from '../../Components/UI/Modal/Modal'
+import Modal from '../../Components/UI/ErrorModal/ErrorModal'
 
 
 const Login = () => {
