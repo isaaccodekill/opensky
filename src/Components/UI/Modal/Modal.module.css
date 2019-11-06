@@ -1,0 +1,30 @@
+.Modal{
+    width: 80%;
+    max-width: 500px;
+    padding: 15px;
+    border-radius: 8px;
+    border: 2px solid #DC004E50;
+    background-color: #DC004E20;
+    display: none;
+    opacity: 0;
+    margin: 30px auto;
+}
+
+.Modal p{
+    color: #DC004E;
+}
+
+.show{
+    display: block;
+    animation: show 0.3s ease-in 0s 1 forwards;
+}
+
+@keyframes show{
+    from{
+        opacity: 0;
+    }
+
+    to{
+        opacity: 1;
+    }
+}

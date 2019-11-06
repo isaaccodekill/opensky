@@ -39,11 +39,17 @@
 
 
 
-
+@media(max-width: 1000px){
+	.LoginBox{
+		top: 400px;
+	}
+}
 
 @media (max-width: 600px) {
 	.LoginBox{
 		width: 100%;
-		top: 140px;
+		top: 400px;
+		border: none;
+
 	}
 }

@@ -1,19 +1,23 @@
 import React, {useState} from 'react'
 import styles from './Home.module.css'
 import Card from '../../Components/UI/Card/Card'
-import { makeStyles } from '@material-ui/core/styles'
 import Modal from '@material-ui/core/Modal'
 import NavBar from '../../Components/UI/NavBar/NavBar'
 import Loader from '../../Components/UI/Loader/Loader'
 import Result from '../../Components/UI/Result/Result'
 import Button from '@material-ui/core/Button';
+import MenuItem from '@material-ui/core/MenuItem'
+import Select from '@material-ui/core/Select'
 
 // import Loader from ''
 
 
 const Home = () => {
 	const [modalOpen, setModalOpen] = useState(false)
-	const [mins, setMins] = useState()
+	const [timeUnit, setTimeUnit] = useState()
+	const [timeBlock, setTImeBlock] = useState("Mins")
+	const [menuOpen, setMenuOpen] = useState(false)
+	const [btnDisabled, setBtnDisabled] = useState(false)
 	const [showLoader, setShowLoader] = useState(false)
 	const [recieved, setRecieved] = useState(false)
 	const [modalDetails, setModalDetails] = useState({
@@ -24,15 +28,28 @@ const Home = () => {
 	})
 	const [mode, setMode] = useState('arrival')
 	const [results, setResult] = useState([])
+	const [timeSecs, setTimeSecs] = useState(0)
 
 	const CURRENT_TIME_IN_SECS = Math.round(new Date().getTime()) / 1000
 	let content = null
 	let setTimesec = 0
 
-	const Timesetter = (mins) => {
+	const Timesetter = (time) => {
 		// get the current time
-		const minsInSecs = mins * 60
-		setTimesec = CURRENT_TIME_IN_SECS - minsInSecs
+		let timeDifference = 0
+		if(timeBlock == "Mins"){
+			timeDifference = (time * 60)
+		}else if(timeBlock == "Hrs"){
+			timeDifference = (time * 60 * 60)
+		}else{
+			timeDifference = (time * 60 * 60 * 24)
+		}
+		console.log(timeDifference)
+		setTimeSecs(CURRENT_TIME_IN_SECS - timeDifference)		
+		if (timeDifference > 518400){
+			setBtnDisabled(true)
+		}
+		console.log("settimesec", timeSecs)
 	}
 
 
@@ -110,14 +127,14 @@ const Home = () => {
 	]
 
 	const getFlightdetails = () => {
-		setShowLoader(true)
 		console.log(CURRENT_TIME_IN_SECS)
-		console.log(setTimesec)
-		let url = `https://opensky-network.org/api/flights/${mode}?airport=${modalDetails.code}&begin=${parseInt(setTimesec)}&end=${parseInt(CURRENT_TIME_IN_SECS)}`
-		console.log(url)
+		console.log(timeSecs)
+		setShowLoader(true)
+		let url = `https://opensky-network.org/api/flights/${mode}?airport=${modalDetails.code}&begin=${parseInt(timeSecs)}&end=${parseInt(CURRENT_TIME_IN_SECS)}`
 		fetch(url)
 		.then(res => res.json())
 		.then(data => {
+			console.log(data)
 			setShowLoader(false)
 			setRecieved(true)
 			if (data.length > 20){
@@ -125,7 +142,6 @@ const Home = () => {
 			}else{
 				setResult([...data])
 			}
-			console.log(data)
 		})
 		.catch(error => console.log(error))
 	}
@@ -143,7 +159,18 @@ const Home = () => {
 			estArrivalAirport={estArrivalAirport}
 			 />)
 			}
+	}
+	if(btnDisabled){
+		let maxTime = 0
+		if(timeBlock == "Mins"){
+			maxTime = 8640
+		}else if(timeBlock == "Hrs"){
+			maxTime = 144
+		}else{
+			maxTime = 6
 		}
+		content = (<p>Maximum time interval allowed is {maxTime} {timeBlock} </p>)
+	}
 
 
 	const open = (idnumber) => {
@@ -151,7 +178,13 @@ const Home = () => {
 		setModalDetails(extractedArr[0]) 
 		setModalOpen(true)
 	}
-	const close = () => setModalOpen(false)		
+	const close = () => {
+		setModalOpen(false)
+		setTimeUnit(0)
+		setTImeBlock("Mins")
+		setResult([])
+	}
+	
 
 	const cardList = cities.map(city => <Card {...city} clickFunc={() => open(city.id)} />)
 	return (
@@ -174,30 +207,50 @@ const Home = () => {
 						<div className={styles.mainContainer}>
 							<div className={styles.mainContainerHeader}>
 								<div className={(mode == "arrival") ? [styles.HeaderBox, styles.active].join(' ') : styles.HeaderBox} onClick={() => {
-									setMins(0)
+									setTimeUnit(0)
 									setResult([])
 									setMode('arrival')}}>Arrivals</div>
 								<div className={(mode == "departure") ? [styles.HeaderBox, styles.active].join(' ') :  styles.HeaderBox} onClick={() => {
-									setMins(0)
+									setTimeUnit(0)
 									setResult([])
 									setMode('departure')}}>Departures</div>
 							</div>
 							<div className={styles.actionBar}>
 								<div className="inputbox">
-								<input type="number" value={mins} min='10'max='10080' onChange={(e) => {
-									setMins(e.target.value)
+								<input type="number" value={timeUnit} min='0' onChange={(e) => {
+									setBtnDisabled(false)
+									setTimeUnit(e.target.value)
+									Timesetter(e.target.value)
 									setRecieved(false)
-								}} className={styles.input}/> <span>mins ago</span> 
+								}} className={styles.input}/>
+						    
+								<Select
+									labelId="demo-controlled-open-select-label"
+									id="demo-controlled-open-select"
+									open={menuOpen}
+									onClose={() => setMenuOpen(false)}
+									onOpen={() => setMenuOpen(true)}
+									value={timeBlock}
+									onChange={(e) => {
+										setTImeBlock(e.target.value)
+										setTimeUnit(0)
+									 }}
+									className={styles.Select}
+								>
+									<MenuItem value="Mins">Mins</MenuItem>
+									<MenuItem value="Hrs">Hrs</MenuItem>
+									<MenuItem value="Days">Days</MenuItem>
+								</Select>
+
 								</div>
-								<Button onClick={() => {
-									Timesetter(mins)
-									getFlightdetails(mode)
+								<Button disabled={btnDisabled} onClick={() => {
+									getFlightdetails()
 								}} variant="contained" color="primary" size="medium" className={styles.button}>
       					  			Search
       							</Button>
 							</div>
 							<div className={styles.mainContent}>
-								{(mins > 0) ? content : <h1 className={styles.warning}>input number of minutes</h1> }				
+								{(timeUnit > 0) ? content : <h1 className={styles.warning}>Input number of {timeBlock}</h1> }				
 							</div>
 						</div>
 

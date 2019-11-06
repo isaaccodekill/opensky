@@ -6,10 +6,12 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button';
 import { AuthContext } from '../../Contexts/AuthContext'
 import { Redirect } from 'react-router'
+import Modal from '../../Components/UI/Modal/Modal'
 
 
 const Login = () => {
 	const [Auth, setAuth] = useContext(AuthContext)
+	const [error, setError] = useState(false)
 	const [loginDetails, setLoginDetails] = useState({
 		username: "",
 		password: ""
@@ -26,17 +28,24 @@ const Login = () => {
 		})
 	}
 
+	let Message = (<Modal show={error}/>)
+
 
 
 	return (
 		<div className={styles.Login}>
 			<NavBar/>
+			{Message}
 			<div className={styles.LoginBox}>
 				<form onSubmit={(e) => {
 					e.preventDefault()
 					if(loginDetails.username == "demo"  && loginDetails.password == "demo" ){
 						setAuth(true)
 						return <Redirect to="/" />
+					}else{
+						setError(true)
+						Message = (<Modal show={error}/>)
+						console.log(Message)
 					}
 				}}>
 					<h1 className={styles.formHeader}>Log in</h1>
