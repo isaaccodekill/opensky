@@ -13,6 +13,9 @@ import cities from '../../Utils/cities'
 
 
 const Home = () => {
+
+	// state
+
 	const [modalOpen, setModalOpen] = useState(false)
 	const [timeUnit, setTimeUnit] = useState()
 	const [timeBlock, setTImeBlock] = useState("Mins")
@@ -32,8 +35,9 @@ const Home = () => {
 	const CURRENT_TIME_IN_SECS = Math.round(new Date().getTime()) / 1000
 	let content = null
 
+
+	// get the current time and calculate the epoch / unix time
 	const Timesetter = (time) => {
-		// get the current time and calculate the epoch / unix time
 		let timeDifference = 0
 		if(timeBlock == "Mins"){
 			timeDifference = (time * 60)
@@ -42,17 +46,19 @@ const Home = () => {
 		}else{
 			timeDifference = (time * 60 * 60 * 24)
 		}
+
+		// set the start time in epoch time
 		setTimeSecs(CURRENT_TIME_IN_SECS - timeDifference)		
+
+		// to check if the difference between the start time and the end time is more than 6 days
 		if (timeDifference > 518400){
 			setBtnDisabled(true)
 		}
 	}
 
 
-
+	// get arrivals or depatures from the open sky api
 	const getFlightdetails = () => {
-		console.log(CURRENT_TIME_IN_SECS)
-		console.log(timeSecs)
 		setShowLoader(true)
 		let url = `https://opensky-network.org/api/flights/${mode}?airport=${modalDetails.code}&begin=${parseInt(timeSecs)}&end=${parseInt(CURRENT_TIME_IN_SECS)}`
 		fetch(url)
@@ -69,6 +75,8 @@ const Home = () => {
 		.catch(error => console.log(error))
 	}
 
+
+	// determine what get shown in the content section - before, during and after api call is made
 	if (showLoader){
 		content = (<div className={styles.LoaderContainer}><Loader/></div>)
 	}else{
@@ -85,6 +93,7 @@ const Home = () => {
 	}
 
 
+	//determine the error message to show when user exceeds the time range 
 	if(btnDisabled){
 		let maxTime = 0
 		if(timeBlock == "Mins"){
@@ -97,6 +106,16 @@ const Home = () => {
 		content = (<p>Maximum time interval allowed is {maxTime} {timeBlock} </p>)
 	}
 
+	
+	// perform a reset of timeinput and result variables
+	const reset = () => {
+		setTimeUnit(0)
+		setResult([])
+		setTImeBlock("Mins")
+	}
+
+
+	// functions to open and close the modal
 
 	const open = (idnumber) => {
 		const extractedArr = cities.filter(({ id }) => id == idnumber )
@@ -105,13 +124,13 @@ const Home = () => {
 	}
 	const close = () => {
 		setModalOpen(false)
-		setTimeUnit(0)
-		setTImeBlock("Mins")
-		setResult([])
+		reset()
 	}
-	
 
+	
+	// create cards fpr cities
 	const cardList = cities.map(city => <Card {...city} clickFunc={() => open(city.id)} />)
+	
 	return (
 		<div className={styles.Homepage}>
 			<NavBar/>
@@ -132,12 +151,10 @@ const Home = () => {
 						<div className={styles.mainContainer}>
 							<div className={styles.mainContainerHeader}>
 								<div className={(mode == "arrival") ? [styles.HeaderBox, styles.active].join(' ') : styles.HeaderBox} onClick={() => {
-									setTimeUnit(0)
-									setResult([])
+									reset()
 									setMode('arrival')}}>Arrivals</div>
 								<div className={(mode == "departure") ? [styles.HeaderBox, styles.active].join(' ') :  styles.HeaderBox} onClick={() => {
-									setTimeUnit(0)
-									setResult([])
+									reset()
 									setMode('departure')}}>Departures</div>
 							</div>
 							<div className={styles.actionBar}>
