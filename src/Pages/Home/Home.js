@@ -29,13 +29,11 @@ const Home = () => {
 	const [mode, setMode] = useState('arrival')
 	const [results, setResult] = useState([])
 	const [timeSecs, setTimeSecs] = useState(0)
-
 	const CURRENT_TIME_IN_SECS = Math.round(new Date().getTime()) / 1000
 	let content = null
-	let setTimesec = 0
 
 	const Timesetter = (time) => {
-		// get the current time
+		// get the current time and calculate the epoch / unix time
 		let timeDifference = 0
 		if(timeBlock == "Mins"){
 			timeDifference = (time * 60)
@@ -44,12 +42,10 @@ const Home = () => {
 		}else{
 			timeDifference = (time * 60 * 60 * 24)
 		}
-		console.log(timeDifference)
 		setTimeSecs(CURRENT_TIME_IN_SECS - timeDifference)		
 		if (timeDifference > 518400){
 			setBtnDisabled(true)
 		}
-		console.log("settimesec", timeSecs)
 	}
 
 
@@ -134,7 +130,6 @@ const Home = () => {
 		fetch(url)
 		.then(res => res.json())
 		.then(data => {
-			console.log(data)
 			setShowLoader(false)
 			setRecieved(true)
 			if (data.length > 20){
@@ -153,13 +148,15 @@ const Home = () => {
 			content = (<h5 className={styles.warning}>No results rerurned, try a larger time interval</h5>)
 		}else{
 			content = results.map(({icao24, callsign, estDepartureAirport, estArrivalAirport }) => <Result 
-			icao24={icao24}
-			callsign={callsign}
-			estDepartureAirport={estDepartureAirport}
-			estArrivalAirport={estArrivalAirport}
+				icao24={icao24}
+				callsign={callsign}
+				estDepartureAirport={estDepartureAirport}
+				estArrivalAirport={estArrivalAirport}
 			 />)
 			}
 	}
+
+
 	if(btnDisabled){
 		let maxTime = 0
 		if(timeBlock == "Mins"){
@@ -241,8 +238,8 @@ const Home = () => {
 									<MenuItem value="Hrs">Hrs</MenuItem>
 									<MenuItem value="Days">Days</MenuItem>
 								</Select>
-
 								</div>
+								
 								<Button disabled={btnDisabled} onClick={() => {
 									getFlightdetails()
 								}} variant="contained" color="primary" size="medium" className={styles.button}>
@@ -257,8 +254,6 @@ const Home = () => {
 		        </div>
       	</Modal>
 
-
-			{/*card grid*/}
 			<div className={styles.gridContainer}>
 				{cardList}
 			</div>
