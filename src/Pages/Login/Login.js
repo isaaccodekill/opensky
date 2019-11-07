@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import { AuthContext } from '../../Contexts/AuthContext'
 import { Redirect } from 'react-router'
 import Modal from '../../Components/UI/ErrorModal/ErrorModal'
+import {ReactComponent as Plane} from '../../Assets/Images/paper-plane.svg'
 
 
 const Login = () => {
@@ -47,11 +48,12 @@ const Login = () => {
 						console.log(Message)
 					}
 				}}>
+					<Plane/>
 					<h1 className={styles.formHeader}>Log in</h1>
 					<div className={styles.formGroup}>
 						 <TextField
 					        id="outlined-name"
-					        label="UserName"
+					        label="Username"
 					        className={styles.input}
 					        value={loginDetails.name}
 					        onChange={handleInputChange('username')}
@@ -63,7 +65,7 @@ const Login = () => {
 					<div className={styles.formGroup}>
 						<TextField
 					        id="outlined-name"
-					        label="password"
+					        label="Password"
 					        className={styles.input}
 					        value={loginDetails.password}
 					        onChange={handleInputChange('password')}

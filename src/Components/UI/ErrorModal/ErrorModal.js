@@ -13,7 +13,7 @@ const Modal = ({show}) => {
    
     return (
         <div className={classes.join(' ')}>
-            <p>Wrong Login Credentials , try using "demo" as both username and password</p>
+            <p>Wrong login credentials, try using "demo" as both username and password</p>
         </div>
 
     )

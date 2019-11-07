@@ -5,32 +5,47 @@
 
 .LoginBox{
 	position: absolute;
-	top: calc(50%);
+	top: calc(52%);
 	left: 50%;
 	width: 100%;
 	width: 450px;
-	border: 1px solid #dadce0;
+	/* border: 1px solid #dadce0; */
 	border-radius: 8px;
-	padding: 40px;
+	padding: 50px;
 	transform: translate(-50%, -50%);
+	text-align: center;
+}
+
+.LoginBox svg{
+	height: 70px;
+	width: 70px;
+	margin-bottom: 20px;
+	fill:#303F9F;
+	color: #303F9F;
+
 }
 
 .formHeader{
 	color: #202124;
 	font-size: 24px;
-	font-weight: 400px;
 	margin-bottom: 20px;
+	text-align: center;
 }
 
 .formGroup{
 	display: block;
 	width: 100%;
-	margin: 15px 0;
+	margin: 0 0 15px 0;
 }
 
 .button{
-	float: right;
-	margin-top: 20px;
+	/* float: right; */
+	position: relative !important;
+	width: 100%;
+	margin-top: 17px !important;
+	border-radius: 30px !important;
+	overflow: hidden;
+	padding: 11px 22px !important;
 }
 
 .input{
