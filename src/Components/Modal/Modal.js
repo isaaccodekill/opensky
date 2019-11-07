@@ -20,7 +20,7 @@ const ModalBox = ({modalOpen, setModalOpen, modalDetails}) => {
     const [mode, setMode] = useState('arrival')
 	const [results, setResult] = useState([])
 	const [timeSecs, setTimeSecs] = useState(0)
-	const CURRENT_TIME_IN_SECS = Math.round(new Date().getTime()) / 1000
+	const CURRENT_TIME_IN_SECS = Math.round(new Date().getTime()  / 1000 )
 	let content = null
 
     const Timesetter = (time) => {

@@ -28,14 +28,13 @@ const Home = () => {
 	}
 	
 	
-	// create cards fpr cities
+	// create cards for cities
 	const cardList = cities.map(city => <Card {...city} key={city.id} clickFunc={() => open(city.id)} />)
 
 	return (
 		<div className={styles.Homepage}>
 			<NavBar/>
 			<ModalBox modalOpen={modalOpen} setModalOpen={setModalOpen} modalDetails={modalDetails} />
-		
 			<div className={styles.gridContainer}>
 				{cardList}
 			</div>
