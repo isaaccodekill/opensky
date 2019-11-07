@@ -50,6 +50,7 @@ const ModalBox = ({modalOpen, setModalOpen, modalDetails}) => {
 		fetch(url)
 		.then(res => res.json())
 		.then(data => {
+			console.log(data)
 			setShowLoader(false)
 			setRecieved(true)
 			if (data.length > 20){
@@ -69,11 +70,13 @@ const ModalBox = ({modalOpen, setModalOpen, modalDetails}) => {
 		if (recieved && results.length == 0){
 			content = (<h5 className={styles.warning}>No results rerurned, try a larger time interval</h5>)
 		}else{
-			content = results.map(({icao24, callsign, estDepartureAirport, estArrivalAirport }) => <Result 
+			content = results.map(({icao24, callsign, estDepartureAirport, estArrivalAirport, firstSeen, lastSeen }) => <Result 
 				icao24={icao24}
 				callsign={callsign}
 				estDepartureAirport={estDepartureAirport}
 				estArrivalAirport={estArrivalAirport}
+				departureTime={firstSeen}
+				estimatedArrivalTime={lastSeen}
 			 />)
 			}
 	}

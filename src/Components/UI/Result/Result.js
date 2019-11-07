@@ -1,9 +1,7 @@
 import React from 'react'
 import styles from './Result.module.css'
 
-const Result = ({icao24, callsign, estDepartureAirport, estArrivalAirport}) => {
-	console.log(icao24)
-	console.log(callsign)
+const Result = ({icao24, callsign, estDepartureAirport, estArrivalAirport, departureTime, estimatedArrivalTime}) => {
 	return (
 		<div className={styles.Result}>
 			<div className={styles.informationGroup}>
@@ -14,6 +12,9 @@ const Result = ({icao24, callsign, estDepartureAirport, estArrivalAirport}) => {
 			</div>
 			<div className={styles.informationGroup}>
 				<span className={styles.Lead}>Departure-Airport:</span> <span className={styles.result}>{estDepartureAirport}</span>
+			</div>
+			<div className={styles.informationGroup}>
+				<span className={styles.Lead}>Departure-time:</span> <span className={styles.time}> -  {new Date(departureTime * 1000).toLocaleString()}</span>
 			</div>
 			<div className={styles.informationGroup}>
 				<span className={styles.Lead}>Arrival-Airport:</span> <span className={styles.result}>{estArrivalAirport}</span>

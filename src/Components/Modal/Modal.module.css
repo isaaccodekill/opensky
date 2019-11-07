@@ -98,7 +98,7 @@
 }
 
 .mainContent{
-	height: 450px;
+	height: 400px;
 	overflow: scroll;
 	overflow-x: hidden;
 	padding: 20px;
