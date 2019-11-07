@@ -22,14 +22,14 @@ const Home = () => {
 
 	// function to open the modal and feed it the details
 	const open = (idnumber) => {
-		const extractedArr = cities.filter(({ id }) => id == idnumber )
+		const extractedArr = cities.filter(({ id }) => id === idnumber )
 		setModalDetails(extractedArr[0]) 
 		setModalOpen(true)
 	}
 	
 	
 	// create cards fpr cities
-	const cardList = cities.map(city => <Card {...city} clickFunc={() => open(city.id)} />)
+	const cardList = cities.map(city => <Card {...city} key={city.id} clickFunc={() => open(city.id)} />)
 
 	return (
 		<div className={styles.Homepage}>

@@ -39,7 +39,7 @@ const Login = () => {
 			<div className={styles.LoginBox}>
 				<form onSubmit={(e) => {
 					e.preventDefault()
-					if(loginDetails.username == "demo"  && loginDetails.password == "demo" ){
+					if(loginDetails.username === "demo"  && loginDetails.password === "demo" ){
 						setAuth(true)
 						return <Redirect to="/" />
 					}else{

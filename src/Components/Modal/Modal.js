@@ -25,9 +25,9 @@ const ModalBox = ({modalOpen, setModalOpen, modalDetails}) => {
 
     const Timesetter = (time) => {
 		let timeDifference = 0
-		if(timeBlock == "Mins"){
+		if(timeBlock === "Mins"){
 			timeDifference = (time * 60)
-		}else if(timeBlock == "Hrs"){
+		}else if(timeBlock === "Hrs"){
 			timeDifference = (time * 60 * 60)
 		}else{
 			timeDifference = (time * 60 * 60 * 24)
@@ -50,7 +50,6 @@ const ModalBox = ({modalOpen, setModalOpen, modalDetails}) => {
 		fetch(url)
 		.then(res => res.json())
 		.then(data => {
-			console.log(data)
 			setShowLoader(false)
 			setRecieved(true)
 			if (data.length > 20){
@@ -67,7 +66,7 @@ const ModalBox = ({modalOpen, setModalOpen, modalDetails}) => {
 	if (showLoader){
 		content = (<div className={styles.LoaderContainer}><Loader/></div>)
 	}else{
-		if (recieved && results.length == 0){
+		if (recieved && results.length === 0){
 			content = (<h5 className={styles.warning}>No results rerurned, try a larger time interval</h5>)
 		}else{
 			content = results.map(({icao24, callsign, estDepartureAirport, estArrivalAirport, firstSeen, lastSeen }) => <Result 
@@ -85,9 +84,9 @@ const ModalBox = ({modalOpen, setModalOpen, modalDetails}) => {
 	//determine the error message to show when user exceeds the time range 
 	if(btnDisabled){
 		let maxTime = 0
-		if(timeBlock == "Mins"){
+		if(timeBlock === "Mins"){
 			maxTime = 8640
-		}else if(timeBlock == "Hrs"){
+		}else if(timeBlock === "Hrs"){
 			maxTime = 144
 		}else{
 			maxTime = 6
@@ -127,10 +126,10 @@ const ModalBox = ({modalOpen, setModalOpen, modalDetails}) => {
 					</div>
 						<div className={styles.mainContainer}>
 							<div className={styles.mainContainerHeader}>
-								<div className={(mode == "arrival") ? [styles.HeaderBox, styles.active].join(' ') : styles.HeaderBox} onClick={() => {
+								<div className={(mode === "arrival") ? [styles.HeaderBox, styles.active].join(' ') : styles.HeaderBox} onClick={() => {
 									reset()
 									setMode('arrival')}}>Arrivals</div>
-								<div className={(mode == "departure") ? [styles.HeaderBox, styles.active].join(' ') :  styles.HeaderBox} onClick={() => {
+								<div className={(mode === "departure") ? [styles.HeaderBox, styles.active].join(' ') :  styles.HeaderBox} onClick={() => {
 									reset()
 									setMode('departure')}}>Departures</div>
 							</div>

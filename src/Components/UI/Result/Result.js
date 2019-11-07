@@ -14,10 +14,13 @@ const Result = ({icao24, callsign, estDepartureAirport, estArrivalAirport, depar
 				<span className={styles.Lead}>Departure-Airport:</span> <span className={styles.result}>{estDepartureAirport}</span>
 			</div>
 			<div className={styles.informationGroup}>
-				<span className={styles.Lead}>Departure-time:</span> <span className={styles.time}> -  {new Date(departureTime * 1000).toLocaleString()}</span>
+				<span className={styles.Lead}>Departure-time:</span> <span className={styles.result}> {new Date(departureTime * 1000).toLocaleString()}</span>
 			</div>
 			<div className={styles.informationGroup}>
 				<span className={styles.Lead}>Arrival-Airport:</span> <span className={styles.result}>{estArrivalAirport}</span>
+			</div>
+			<div className={styles.informationGroup}>
+				<span className={styles.Lead}>Last pinged:</span> <span className={styles.result}>{new Date(estimatedArrivalTime * 1000).toLocaleString()}</span>
 			</div>
 		</div>
 	)

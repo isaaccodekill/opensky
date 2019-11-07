@@ -1,10 +1,9 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import styles from './ErrorModal.module.css'
 
 const Modal = ({show}) => {
 
 
-    const [hide, setHide] = useState(false)
 
     let classes = [styles.Modal]
     if (show){
