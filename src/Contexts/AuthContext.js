@@ -4,9 +4,26 @@ export const AuthContext = createContext()
 
 
 const AuthContextProvider = ({children}) => {
-	const [Auth, setAuth] = useState(false)
+	let authInitial = false
+
+	if(localStorage.getItem("openSkyToken")){
+		authInitial = true
+	}
+
+	const [Auth, setAuth] = useState(authInitial)
+
+	const setToken = (token) => {
+		localStorage.setItem("openSkyToken", JSON.stringify(token))
+		setAuth(true)
+	}
+
+	const deleteToken = () => {
+		localStorage.removeItem("openSkyToken")
+		setAuth(false)
+	}
+
 	return (
-		<AuthContext.Provider value={[Auth, setAuth]}>
+		<AuthContext.Provider value={[Auth, setToken, deleteToken]}>
 			{children}
 		</AuthContext.Provider>
 	)

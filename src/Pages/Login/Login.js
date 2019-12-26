@@ -10,7 +10,7 @@ import {ReactComponent as Plane} from '../../Assets/Images/paper-plane.svg'
 
 
 const Login = () => {
-	const [Auth, setAuth] = useContext(AuthContext)
+	const [Auth, setToken] = useContext(AuthContext)
 	const [error, setError] = useState(false)
 	const [loginDetails, setLoginDetails] = useState({
 		username: "",
@@ -28,6 +28,17 @@ const Login = () => {
 		})
 	}
 
+	const submitFunc = (e) => {
+		e.preventDefault()
+		if(loginDetails.username === "demo"  && loginDetails.password === "demo" ){
+			setToken("1234567")
+			return <Redirect to="/" />
+		}else{
+			setError(true)
+			Message = (<Modal show={error}/>)
+		}
+	}
+
 	let Message = (<Modal show={error}/>)
 
 
@@ -37,17 +48,7 @@ const Login = () => {
 			<NavBar/>
 			{Message}
 			<div className={styles.LoginBox}>
-				<form onSubmit={(e) => {
-					e.preventDefault()
-					if(loginDetails.username === "demo"  && loginDetails.password === "demo" ){
-						setAuth(true)
-						return <Redirect to="/" />
-					}else{
-						setError(true)
-						Message = (<Modal show={error}/>)
-						console.log(Message)
-					}
-				}}>
+				<form onSubmit={submitFunc}>
 					<Plane/>
 					<h1 className={styles.formHeader}>Log in</h1>
 					<div className={styles.formGroup}>
