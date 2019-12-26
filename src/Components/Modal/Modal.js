@@ -86,7 +86,6 @@ const ModalBox = ({modalOpen, setModalOpen, modalDetails}) => {
 
 	//determine the error message to show when user exceeds the time range 
 	if(btnDisabled){
-		console.log("checking the btn disables")
 		let maxTime = 0
 		if(timeBlock === "Mins"){
 			maxTime = 8640
