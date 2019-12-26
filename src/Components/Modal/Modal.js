@@ -14,7 +14,7 @@ const ModalBox = ({modalOpen, setModalOpen, modalDetails}) => {
     const [timeUnit, setTimeUnit] = useState()
 	const [timeBlock, setTImeBlock] = useState("Mins")
 	const [menuOpen, setMenuOpen] = useState(false)
-	const [btnDisabled, setBtnDisabled] = useState(true)
+	const [btnDisabled, setBtnDisabled] = useState(false)
 	const [showLoader, setShowLoader] = useState(false)
     const [recieved, setRecieved] = useState(false)
     const [mode, setMode] = useState('arrival')
